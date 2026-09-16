@@ -1,4 +1,4 @@
- <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="ru">
 <head>
   <meta charset="UTF-8" />
@@ -6,24 +6,10 @@
     name="viewport"
     content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
   />
-
   <title>Flower Garden</title>
-
   <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-
-    html,
-    body {
-      width: 100%;
-      height: 100%;
-      overflow: hidden;
-      font-family: Arial, sans-serif;
-    }
-
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body { width: 100%; height: 100%; overflow: hidden; font-family: Arial, sans-serif; }
     body {
       background:
         radial-gradient(circle at 50% 20%, rgba(255, 210, 220, 0.28) 0%, transparent 35%),
@@ -33,533 +19,249 @@
     }
 
     .signature-wrap {
-      position: fixed;
-      left: 50%;
-      top: 24%;
-      transform: translate(-50%, -50%);
-      z-index: 1500;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 10px;
-      pointer-events: none;
-      user-select: none;
+      position: fixed; left: 50%; top: 24%; transform: translate(-50%, -50%);
+      z-index: 1500; display: flex; align-items: center; justify-content: center; gap: 10px;
+      pointer-events: none; user-select: none;
     }
-
     .signature {
       font-family: "Palatino Linotype", "Book Antiqua", Georgia, serif;
-      font-size: clamp(56px, 14vw, 144px);
-      letter-spacing: 0.18em;
-      font-weight: 700;
+      font-size: clamp(56px, 14vw, 144px); letter-spacing: 0.18em; font-weight: 700;
       color: rgba(255, 244, 248, 0.92);
-      text-shadow:
-        0 0 18px rgba(255, 214, 230, 0.7),
-        0 0 42px rgba(255, 173, 204, 0.5),
-        0 8px 20px rgba(60, 15, 25, 0.28);
+      text-shadow: 0 0 18px rgba(255, 214, 230, 0.7), 0 0 42px rgba(255, 173, 204, 0.5), 0 8px 20px rgba(60, 15, 25, 0.28);
       white-space: nowrap;
     }
-
-    .heart {
-      font-size: clamp(22px, 3vw, 34px);
-      color: rgba(255, 214, 230, 0.9);
-      text-shadow: 0 0 16px rgba(255, 180, 210, 0.8);
-      opacity: 0.9;
-    }
+    .heart-icon { font-size: clamp(22px, 3vw, 34px); color: rgba(255, 214, 230, 0.9); text-shadow: 0 0 16px rgba(255, 180, 210, 0.8); opacity: 0.9; }
 
     .cursor-glow {
-      position: fixed;
-      left: 0;
-      top: 0;
-      width: 36px;
-      height: 36px;
-      border-radius: 50%;
-      transform: translate(-50%, -50%);
-      pointer-events: none;
-      z-index: 1800;
+      position: fixed; left: 0; top: 0; width: 36px; height: 36px; border-radius: 50%;
+      transform: translate(-50%, -50%); pointer-events: none; z-index: 1800;
       background: radial-gradient(circle, rgba(255,255,255,0.72) 0%, rgba(255, 214, 230, 0.5) 24%, rgba(255, 214, 230, 0.12) 55%, transparent 100%);
       box-shadow: 0 0 25px rgba(255, 214, 230, 0.8), 0 0 45px rgba(255, 166, 198, 0.55);
       opacity: 0.9;
     }
 
-    /* Сад */
-
-    #garden {
-      position: fixed;
-      inset: 0;
-      overflow: hidden;
-    }
-
-    /* Земля */
+    #garden { position: fixed; inset: 0; overflow: hidden; }
 
     .ground {
-      position: absolute;
-      left: -5%;
-      bottom: -100px;
-      width: 110%;
-      height: 230px;
-
+      position: absolute; left: -5%; bottom: -100px; width: 110%; height: 230px;
       background: linear-gradient(180deg, #7d2b3a 0%, #4f1b2c 100%);
       border-radius: 50% 50% 0 0 / 35% 35% 0 0;
-
-      box-shadow:
-        inset 0 15px 35px rgba(30, 10, 15, 0.3);
+      box-shadow: inset 0 15px 35px rgba(30, 10, 15, 0.3);
     }
-
-    /* Цветок */
 
     .flower {
-      position: absolute;
-      width: 0;
-      height: 0;
-
+      position: absolute; width: 0; height: 0;
       transform-origin: bottom center;
       filter: drop-shadow(0 8px 10px rgba(0, 0, 0, 0.15));
-
       animation: appear 0.55s cubic-bezier(0.2, 0.8, 0.2, 1.1) forwards;
     }
-
     @keyframes appear {
-      0% {
-        opacity: 0;
-        transform: scale(0.2) rotate(-10deg);
-      }
-
-      60% {
-        opacity: 1;
-        transform: scale(1.12) rotate(4deg);
-      }
-
-      100% {
-        opacity: 1;
-        transform: scale(1) rotate(0deg);
-      }
+      0% { opacity: 0; transform: scale(0.2) rotate(-10deg); }
+      60% { opacity: 1; transform: scale(1.12) rotate(4deg); }
+      100% { opacity: 1; transform: scale(1) rotate(0deg); }
     }
 
     /* Стебель */
-
     .stem {
-      position: absolute;
-      left: -2px;
-      bottom: 0;
-
-      width: 4px;
-      height: 0;
-
-      background: linear-gradient(
-        to right,
-        #557a42,
-        #7e9c55
-      );
-
-      border-radius: 5px;
-
-      transform-origin: bottom;
+      position: absolute; left: -2px; bottom: 0; width: 4px; height: 0;
+      background: linear-gradient(to right, #557a42, #7e9c55);
+      border-radius: 5px; transform-origin: bottom;
       animation: growStem 0.9s ease-out forwards;
     }
+    @keyframes growStem { from { height: 0; } to { height: var(--stem-height); } }
 
-    @keyframes growStem {
-      from {
-        height: 0;
-      }
-
-      to {
-        height: var(--stem-height);
-      }
+    /* Стебель подсолнуха — толще */
+    .flower[data-type="sunflower"] .stem {
+      width: 6px; left: -3px;
+      background: linear-gradient(to right, #4a6e32, #6b8e42);
     }
 
     /* Листья */
-
     .leaf {
-      position: absolute;
-
-      width: 30px;
-      height: 15px;
-
-      background: #789451;
-      border-radius: 100% 0 100% 0;
-
-      opacity: 0;
-
+      position: absolute; width: 30px; height: 15px;
+      background: #789451; border-radius: 100% 0 100% 0; opacity: 0;
       animation: leafAppear 0.5s ease-out forwards;
     }
-
-    .leaf.left {
-      left: -28px;
-      bottom: 35%;
-      transform: rotate(-25deg);
-      animation-delay: 0.45s;
-    }
-
-    .leaf.right {
-      left: 2px;
-      bottom: 52%;
-      transform: rotate(25deg) scaleX(-1);
-      animation-delay: 0.6s;
-    }
-
-    @keyframes leafAppear {
-      from {
-        opacity: 0;
-        transform: scale(0);
-      }
-
-      to {
-        opacity: 1;
-      }
-    }
+    .leaf.left { left: -28px; bottom: 35%; transform: rotate(-25deg); animation-delay: 0.45s; }
+    .leaf.right { left: 2px; bottom: 52%; transform: rotate(25deg) scaleX(-1); animation-delay: 0.6s; }
+    @keyframes leafAppear { from { opacity: 0; transform: scale(0); } to { opacity: 1; } }
 
     /* Голова цветка */
-
     .flower-head {
-      position: absolute;
-
-      width: 52px;
-      height: 52px;
-
-      left: -26px;
+      position: absolute; width: 52px; height: 52px; left: -26px;
       bottom: calc(var(--stem-height) - 28px);
-
       transform: scale(0);
-
-      animation: flowerBloom 0.8s
-        cubic-bezier(0.17, 0.67, 0.32, 1.35)
-        forwards;
-
+      animation: flowerBloom 0.8s cubic-bezier(0.17, 0.67, 0.32, 1.35) forwards;
       animation-delay: 0.7s;
     }
-
     @keyframes flowerBloom {
-      0% {
-        transform: scale(0) rotate(-20deg);
-      }
-
-      70% {
-        transform: scale(1.15) rotate(5deg);
-      }
-
-      100% {
-        transform: scale(1) rotate(0deg);
-      }
+      0% { transform: scale(0) rotate(-20deg); }
+      70% { transform: scale(1.15) rotate(5deg); }
+      100% { transform: scale(1) rotate(0deg); }
     }
 
-    /* Лепестки */
-
+    /* === Лепестки通用 === */
     .petal {
-      position: absolute;
-
-      width: 22px;
-      height: 30px;
-
-      left: 22px;
-      top: 18px;
-
+      position: absolute; width: 22px; height: 30px; left: 22px; top: 18px;
       border-radius: 60% 40% 58% 42% / 72% 30% 70% 28%;
-      box-shadow:
-        inset 0 0 10px rgba(255, 255, 255, 0.22),
-        0 0 8px rgba(255, 255, 255, 0.14);
-
+      box-shadow: inset 0 0 10px rgba(255, 255, 255, 0.22), 0 0 8px rgba(255, 255, 255, 0.14);
       transform-origin: 50% 100%;
       background: linear-gradient(180deg, rgba(255,255,255,0.3), rgba(255,255,255,0.08));
     }
+    .petal:nth-child(1) { transform: rotate(0deg) translateY(-15px); }
+    .petal:nth-child(2) { transform: rotate(45deg) translateY(-15px); }
+    .petal:nth-child(3) { transform: rotate(90deg) translateY(-15px); }
+    .petal:nth-child(4) { transform: rotate(135deg) translateY(-15px); }
+    .petal:nth-child(5) { transform: rotate(180deg) translateY(-15px); }
+    .petal:nth-child(6) { transform: rotate(225deg) translateY(-15px); }
+    .petal:nth-child(7) { transform: rotate(270deg) translateY(-15px); }
+    .petal:nth-child(8) { transform: rotate(315deg) translateY(-15px); }
 
-    .flower[data-type="dandelion"] .petal {
-      width: 12px;
-      height: 18px;
-      left: 24px;
-      top: 22px;
-      border-radius: 70% 30% 65% 35% / 60% 40% 60% 40%;
-      box-shadow: none;
-      background: linear-gradient(180deg, rgba(255,255,255,0.22), rgba(255,255,255,0.03));
-    }
-
+    /* --- Роза --- */
     .flower[data-type="rose"] .petal {
-      width: 20px;
-      height: 22px;
-      left: 22px;
-      top: 18px;
+      width: 20px; height: 22px; left: 22px; top: 18px;
       border-radius: 62% 38% 60% 40% / 70% 30% 70% 30%;
       box-shadow: inset 0 0 6px rgba(255,255,255,0.18);
       background: linear-gradient(180deg, rgba(255,255,255,0.24), rgba(255,255,255,0.05));
     }
-
-    .flower[data-type="peony"] .petal {
-      width: 18px;
-      height: 26px;
-      left: 23px;
-      top: 18px;
-      border-radius: 68% 32% 62% 38% / 76% 24% 76% 24%;
-      background: linear-gradient(180deg, rgba(255,255,255,0.24), rgba(255,255,255,0.06));
+    .flower[data-type="rose"] .center {
+      width: 18px; height: 18px; left: 21px; top: 21px;
     }
 
-    .petal:nth-child(1) {
-      transform: rotate(0deg) translateY(-15px);
+    /* --- Одуванчик --- */
+    .flower[data-type="dandelion"] .petal {
+      width: 12px; height: 18px; left: 24px; top: 22px;
+      border-radius: 70% 30% 65% 35% / 60% 40% 60% 40%;
+      box-shadow: none;
+      background: linear-gradient(180deg, rgba(255,255,255,0.22), rgba(255,255,255,0.03));
     }
-
-    .petal:nth-child(2) {
-      transform: rotate(45deg) translateY(-15px);
-    }
-
-    .petal:nth-child(3) {
-      transform: rotate(90deg) translateY(-15px);
-    }
-
-    .petal:nth-child(4) {
-      transform: rotate(135deg) translateY(-15px);
-    }
-
-    .petal:nth-child(5) {
-      transform: rotate(180deg) translateY(-15px);
-    }
-
-    .petal:nth-child(6) {
-      transform: rotate(225deg) translateY(-15px);
-    }
-
-    .petal:nth-child(7) {
-      transform: rotate(270deg) translateY(-15px);
-    }
-
-    .petal:nth-child(8) {
-      transform: rotate(315deg) translateY(-15px);
-    }
-
-    /* Центр */
-
-    .center {
-      position: absolute;
-
-      width: 22px;
-      height: 22px;
-
-      left: 24px;
-      top: 24px;
-
-      background: radial-gradient(circle at 30% 30%, #ffe8a3 0%, #f3b83f 30%, #d68c1f 100%);
-      border-radius: 50%;
-
-      box-shadow:
-        0 0 0 3px rgba(255, 206, 75, 0.25),
-        0 0 18px rgba(255, 190, 80, 0.45),
-        inset 2px 2px 4px rgba(120, 80, 20, 0.15);
-    }
-
     .flower[data-type="dandelion"] .center {
-      width: 14px;
-      height: 14px;
-      left: 23px;
-      top: 23px;
+      width: 14px; height: 14px; left: 23px; top: 23px;
       box-shadow: 0 0 0 2px rgba(255, 220, 100, 0.22), 0 0 10px rgba(255, 210, 110, 0.32);
     }
 
-    .flower[data-type="rose"] .center {
-      width: 18px;
-      height: 18px;
-      left: 21px;
-      top: 21px;
+    /* --- Подсолнух --- */
+    .flower[data-type="sunflower"] .petal {
+      width: 14px; height: 28px; left: 24px; top: 14px;
+      border-radius: 50% 50% 50% 50% / 70% 70% 30% 30%;
+      box-shadow: inset 0 0 8px rgba(255,255,255,0.15);
+    }
+    .flower[data-type="sunflower"] .center {
+      width: 26px; height: 26px; left: 17px; top: 17px;
+      background: radial-gradient(circle at 30% 30%, #5c3a1e 0%, #3d2210 50%, #2a1608 100%);
+      box-shadow: 0 0 0 3px rgba(80, 50, 20, 0.3), 0 0 12px rgba(60, 30, 10, 0.4);
     }
 
-    .flower[data-type="peony"] .center {
-      width: 20px;
-      height: 20px;
-      left: 20px;
-      top: 20px;
+    /* --- Сердце --- */
+    .flower[data-type="heart"] .petal {
+      display: none;
+    }
+    .heart-shape {
+      position: absolute;
+      width: 44px; height: 40px;
+      left: 4px; top: 6px;
+    }
+    .heart-shape::before, .heart-shape::after {
+      content: '';
+      position: absolute; top: 0;
+      width: 24px; height: 36px;
+      border-radius: 24px 24px 0 0;
+    }
+    .heart-shape::before {
+      left: 22px;
+      transform: rotate(-45deg);
+      transform-origin: 0 100%;
+    }
+    .heart-shape::after {
+      left: 0;
+      transform: rotate(45deg);
+      transform-origin: 100% 100%;
+    }
+    .flower[data-type="heart"] .center { display: none; }
+
+    /* Центр通用 */
+    .center {
+      position: absolute; width: 22px; height: 22px; left: 24px; top: 24px;
+      background: radial-gradient(circle at 30% 30%, #ffe8a3 0%, #f3b83f 30%, #d68c1f 100%);
+      border-radius: 50%;
+      box-shadow: 0 0 0 3px rgba(255, 206, 75, 0.25), 0 0 18px rgba(255, 190, 80, 0.45), inset 2px 2px 4px rgba(120, 80, 20, 0.15);
     }
 
     /* Частицы */
-
     .particle {
-      position: absolute;
-
-      width: 6px;
-      height: 6px;
-
-      background: rgba(255, 255, 255, 0.75);
-      border-radius: 50%;
-
-      pointer-events: none;
-
-      animation: particle 0.8s ease-out forwards;
+      position: absolute; width: 6px; height: 6px;
+      background: rgba(255, 255, 255, 0.75); border-radius: 50%;
+      pointer-events: none; animation: particle 0.8s ease-out forwards;
     }
-
     @keyframes particle {
-      0% {
-        opacity: 1;
-        transform: translate(0, 0) scale(1);
-      }
-
-      30% {
-        opacity: 1;
-      }
-
-      100% {
-        opacity: 0;
-        transform:
-          translate(
-            var(--x),
-            var(--y)
-          )
-          scale(0);
-      }
+      0% { opacity: 1; transform: translate(0, 0) scale(1); }
+      30% { opacity: 1; }
+      100% { opacity: 0; transform: translate(var(--x), var(--y)) scale(0); }
     }
 
     .sparkle {
-      position: absolute;
-      width: 8px;
-      height: 8px;
-      border-radius: 50%;
+      position: absolute; width: 8px; height: 8px; border-radius: 50%;
       background: radial-gradient(circle, rgba(255,255,255,1) 0%, rgba(255,244,190,0.95) 35%, rgba(255,255,255,0) 80%);
-      pointer-events: none;
-      opacity: 0;
-      animation: sparkle 1.2s ease-out forwards;
+      pointer-events: none; opacity: 0; animation: sparkle 1.2s ease-out forwards;
+    }
+    @keyframes sparkle {
+      0% { opacity: 0; transform: scale(0.2) translate(0, 0); }
+      20% { opacity: 1; transform: scale(1) translate(0, 0); }
+      100% { opacity: 0; transform: scale(0.3) translate(var(--sx), var(--sy)); }
     }
 
     .ambient-spark {
-      position: fixed;
-      width: 7px;
-      height: 7px;
-      border-radius: 50%;
+      position: fixed; width: 7px; height: 7px; border-radius: 50%;
       pointer-events: none;
       background: radial-gradient(circle, rgba(255,255,255,0.97) 0%, rgba(255,224,163,0.9) 25%, rgba(255,255,255,0) 70%);
       box-shadow: 0 0 12px rgba(255, 214, 140, 0.7);
-      opacity: 0.8;
-      animation: ambientFloat var(--dur, 10s) ease-in-out infinite;
-      z-index: 100;
+      opacity: 0.8; animation: ambientFloat var(--dur, 10s) ease-in-out infinite; z-index: 100;
     }
-
-    @keyframes sparkle {
-      0% {
-        opacity: 0;
-        transform: scale(0.2) translate(0, 0);
-      }
-
-      20% {
-        opacity: 1;
-        transform: scale(1) translate(0, 0);
-      }
-
-      100% {
-        opacity: 0;
-        transform: scale(0.3) translate(var(--sx), var(--sy));
-      }
-    }
-
     @keyframes ambientFloat {
-      0% {
-        transform: translate3d(0, 0, 0) scale(0.7);
-        opacity: 0.1;
-      }
-
-      25% {
-        opacity: 0.9;
-      }
-
-      50% {
-        transform: translate3d(var(--x1), var(--y1), 0) scale(1.1);
-        opacity: 0.8;
-      }
-
-      100% {
-        transform: translate3d(var(--x2), var(--y2), 0) scale(0.8);
-        opacity: 0.1;
-      }
+      0% { transform: translate3d(0, 0, 0) scale(0.7); opacity: 0.1; }
+      25% { opacity: 0.9; }
+      50% { transform: translate3d(var(--x1), var(--y1), 0) scale(1.1); opacity: 0.8; }
+      100% { transform: translate3d(var(--x2), var(--y2), 0) scale(0.8); opacity: 0.1; }
     }
-
-    /* Кнопка очистки */
 
     .controls {
-      position: fixed;
-      left: 50%;
-      bottom: 25px;
-      transform: translateX(-50%);
-
-      z-index: 2000;
-
-      display: flex;
-      gap: 10px;
+      position: fixed; left: 50%; bottom: 25px; transform: translateX(-50%);
+      z-index: 2000; display: flex; gap: 10px;
     }
-
     button {
-      border: none;
-      padding: 12px 20px;
-
-      border-radius: 30px;
-
-      background: rgba(255, 255, 255, 0.75);
-      color: #514744;
-
-      font-size: 14px;
-      font-weight: 600;
-
-      cursor: pointer;
-
-      backdrop-filter: blur(10px);
-
-      box-shadow:
-        0 5px 20px rgba(50, 40, 30, 0.1);
-
-      transition:
-        transform 0.2s,
-        background 0.2s;
+      border: none; padding: 12px 20px; border-radius: 30px;
+      background: rgba(255, 255, 255, 0.75); color: #514744;
+      font-size: 14px; font-weight: 600; cursor: pointer;
+      backdrop-filter: blur(10px); box-shadow: 0 5px 20px rgba(50, 40, 30, 0.1);
+      transition: transform 0.2s, background 0.2s;
     }
-
-    button:hover {
-      transform: translateY(-2px);
-      background: white;
-    }
-
-    button:active {
-      transform: scale(0.95);
-    }
-
-
-    /* Небольшая адаптация телефона */
+    button:hover { transform: translateY(-2px); background: white; }
+    button:active { transform: scale(0.95); }
 
     @media (max-width: 600px) {
-      .controls {
-        left: 15px;
-        bottom: 25px;
-        transform: none;
-      }
-
-      button {
-        padding: 10px 15px;
-      }
+      .controls { left: 15px; bottom: 25px; transform: none; }
+      button { padding: 10px 15px; }
     }
   </style>
 </head>
-
 <body>
 
   <div class="signature-wrap">
-    <span class="heart">♥</span>
+    <span class="heart-icon">&#9829;</span>
     <div class="signature">Sofia</div>
-    <span class="heart">♥</span>
+    <span class="heart-icon">&#9829;</span>
   </div>
 
   <div id="garden">
-
     <div class="ground"></div>
-
   </div>
 
   <div class="cursor-glow" id="cursorGlow"></div>
 
-
   <script>
-
     const garden = document.getElementById("garden");
-    const countElement = document.getElementById("count");
-    const clearButton = document.getElementById("clear");
-    const randomButton = document.getElementById("random");
     const cursorGlow = document.getElementById("cursorGlow");
-
     let flowerCount = 0;
-
-    function updateCount() {
-      if (countElement) {
-        countElement.textContent = String(flowerCount);
-      }
-    }
 
     function createCursorSparkle(x, y) {
       const spark = document.createElement("div");
@@ -576,552 +278,211 @@
     }
 
     function createAmbientSparkles() {
-      const count = 30;
-      for (let i = 0; i < count; i++) {
-        const particle = document.createElement("div");
-        particle.className = "ambient-spark";
-        const left = Math.random() * window.innerWidth;
-        const top = Math.random() * window.innerHeight;
-        particle.style.left = left + "px";
-        particle.style.top = top + "px";
-        particle.style.setProperty("--x1", (Math.random() * 26 - 13) + "px");
-        particle.style.setProperty("--y1", (Math.random() * 26 - 13) + "px");
-        particle.style.setProperty("--x2", (Math.random() * 34 - 17) + "px");
-        particle.style.setProperty("--y2", (Math.random() * 34 - 17) + "px");
-        particle.style.setProperty("--dur", (8 + Math.random() * 12) + "s");
-        particle.style.opacity = (0.2 + Math.random() * 0.7).toFixed(2);
-        document.body.appendChild(particle);
+      for (let i = 0; i < 30; i++) {
+        const p = document.createElement("div");
+        p.className = "ambient-spark";
+        p.style.left = Math.random() * window.innerWidth + "px";
+        p.style.top = Math.random() * window.innerHeight + "px";
+        p.style.setProperty("--x1", (Math.random() * 26 - 13) + "px");
+        p.style.setProperty("--y1", (Math.random() * 26 - 13) + "px");
+        p.style.setProperty("--x2", (Math.random() * 34 - 17) + "px");
+        p.style.setProperty("--y2", (Math.random() * 34 - 17) + "px");
+        p.style.setProperty("--dur", (8 + Math.random() * 12) + "s");
+        p.style.opacity = (0.2 + Math.random() * 0.7).toFixed(2);
+        document.body.appendChild(p);
       }
     }
 
-    document.addEventListener("pointermove", (event) => {
-      const x = event.clientX;
-      const y = event.clientY;
-
-      if (cursorGlow) {
-        cursorGlow.style.left = x + "px";
-        cursorGlow.style.top = y + "px";
-      }
-
-      for (let i = 0; i < 3; i++) {
-        createCursorSparkle(x + (Math.random() * 20 - 10), y + (Math.random() * 20 - 10));
-      }
+    document.addEventListener("pointermove", (e) => {
+      if (cursorGlow) { cursorGlow.style.left = e.clientX + "px"; cursorGlow.style.top = e.clientY + "px"; }
+      for (let i = 0; i < 3; i++) createCursorSparkle(e.clientX + (Math.random()*20-10), e.clientY + (Math.random()*20-10));
     });
 
-    document.addEventListener("pointerdown", (event) => {
+    document.addEventListener("pointerdown", (e) => {
       playMelody();
-      for (let i = 0; i < 8; i++) {
-        createCursorSparkle(event.clientX, event.clientY);
-      }
-      createFlower(event.clientX, event.clientY);
+      for (let i = 0; i < 8; i++) createCursorSparkle(e.clientX, e.clientY);
+      createFlower(e.clientX, e.clientY);
     });
 
-    const melodyNotes = [
-      261.63, 329.63, 392.0, 440.0,
-      392.0, 329.63, 293.66, 349.23,
-      392.0, 440.0, 523.25, 440.0,
-      392.0, 349.23, 329.63, 293.66,
-      349.23, 392.0, 440.0, 523.25,
-      440.0, 392.0, 349.23, 329.63
-    ];
-
-    let melodyStarted = false;
-    let audioContext = null;
+    const melodyNotes = [261.63,329.63,392.0,440.0,392.0,329.63,293.66,349.23,392.0,440.0,523.25,440.0,392.0,349.23,329.63,293.66,349.23,392.0,440.0,523.25,440.0,392.0,349.23,329.63];
+    let melodyStarted = false, audioContext = null;
 
     function ensureAudio() {
-      if (!audioContext) {
-        const AudioCtor = window.AudioContext || window.webkitAudioContext;
-        if (!AudioCtor) {
-          return null;
-        }
-        audioContext = new AudioCtor();
-      }
-
-      if (audioContext.state === "suspended") {
-        audioContext.resume();
-      }
-
+      if (!audioContext) { const A = window.AudioContext || window.webkitAudioContext; if (!A) return null; audioContext = new A(); }
+      if (audioContext.state === "suspended") audioContext.resume();
       return audioContext;
     }
 
-    function playTone(frequency, startTime, duration, volume = 0.035, wave = "sine") {
-      const ctx = ensureAudio();
-      if (!ctx) {
-        return;
-      }
-
-      const oscillator = ctx.createOscillator();
-      const gainNode = ctx.createGain();
-      const filter = ctx.createBiquadFilter();
-
-      oscillator.type = wave;
-      oscillator.frequency.setValueAtTime(frequency, startTime);
-
-      filter.type = "lowpass";
-      filter.frequency.setValueAtTime(1800, startTime);
-      filter.Q.value = 0.6;
-
-      gainNode.gain.setValueAtTime(0.0001, startTime);
-      gainNode.gain.exponentialRampToValueAtTime(volume, startTime + 0.02);
-      gainNode.gain.exponentialRampToValueAtTime(0.0001, startTime + duration);
-
-      oscillator.connect(filter);
-      filter.connect(gainNode);
-      gainNode.connect(ctx.destination);
-
-      oscillator.start(startTime);
-      oscillator.stop(startTime + duration + 0.08);
+    function playTone(f, t, d, v = 0.035, w = "sine") {
+      const ctx = ensureAudio(); if (!ctx) return;
+      const osc = ctx.createOscillator(), g = ctx.createGain(), fl = ctx.createBiquadFilter();
+      osc.type = w; osc.frequency.setValueAtTime(f, t);
+      fl.type = "lowpass"; fl.frequency.setValueAtTime(1800, t); fl.Q.value = 0.6;
+      g.gain.setValueAtTime(0.0001, t); g.gain.exponentialRampToValueAtTime(v, t+0.02); g.gain.exponentialRampToValueAtTime(0.0001, t+d);
+      osc.connect(fl); fl.connect(g); g.connect(ctx.destination);
+      osc.start(t); osc.stop(t + d + 0.08);
     }
 
     function playMelody() {
-      const ctx = ensureAudio();
-      if (!ctx || melodyStarted) {
-        return;
-      }
-
+      const ctx = ensureAudio(); if (!ctx || melodyStarted) return;
       melodyStarted = true;
-
-      let start = ctx.currentTime + 0.1;
-
-      melodyNotes.forEach((note, index) => {
-        const duration = 0.42 + (index % 3 === 0 ? 0.1 : 0.05);
-        const wave = index % 2 === 0 ? "sine" : "triangle";
-        const volume = index % 4 === 0 ? 0.032 : 0.024;
-
-        playTone(note, start, duration, volume, wave);
-        start += 0.42;
+      let t = ctx.currentTime + 0.1;
+      melodyNotes.forEach((n, i) => {
+        const d = 0.42 + (i%3===0?0.1:0.05);
+        playTone(n, t, d, i%4===0?0.032:0.024, i%2===0?"sine":"triangle");
+        t += 0.42;
       });
-
-      setTimeout(() => {
-        melodyStarted = false;
-        if (!document.hidden) {
-          playMelody();
-        }
-      }, 10000);
+      setTimeout(() => { melodyStarted = false; if (!document.hidden) playMelody(); }, 10000);
     }
 
-
-    /*
-      Палитра цветов.
-      Можно добавлять сюда свои цвета.
-    */
-
-    const flowerColors = [
-      "#f49ab0",
-      "#f5b6d2",
-      "#dba7ed",
-      "#f7c76a",
-      "#f28b82",
-      "#a9c9f2",
-      "#f6a6c1",
-      "#c8e39b",
-      "#ffd3a8",
-      "#efb8d9"
-    ];
-
-    const flowerTypes = [
-      "dandelion",
-      "rose",
-      "peony"
-    ];
+    const flowerColors = ["#f49ab0","#f5b6d2","#dba7ed","#f7c76a","#f28b82","#a9c9f2","#f6a6c1","#c8e39b","#ffd3a8","#efb8d9"];
+    const flowerTypes = ["rose", "heart", "dandelion", "sunflower"];
 
     function buildFlowerPetals(type, head, color) {
-      const petalTotal = type === "dandelion" ? 12 : type === "rose" ? 9 : 14;
+      let petalTotal, petalW, petalH, petalLeft, petalTop, borderR, dist, bend;
+
+      switch(type) {
+        case "rose":
+          petalTotal = 9; petalW = 20; petalH = 22; petalLeft = 22; petalTop = 18;
+          borderR = "62% 38% 60% 40% / 70% 30% 70% 30%"; dist = -12; bend = 4;
+          break;
+        case "dandelion":
+          petalTotal = 16; petalW = 10; petalH = 16; petalLeft = 25; petalTop = 22;
+          borderR = "50% 50% 50% 50% / 60% 60% 40% 40%"; dist = -8; bend = 0;
+          break;
+        case "sunflower":
+          petalTotal = 16; petalW = 14; petalH = 28; petalLeft = 24; petalTop = 14;
+          borderR = "50% 50% 50% 50% / 70% 70% 30% 30%"; dist = -16; bend = 0;
+          break;
+        case "heart":
+          petalTotal = 0;
+          break;
+      }
 
       for (let i = 0; i < petalTotal; i++) {
         const petal = document.createElement("div");
         petal.className = "petal";
+        petal.style.width = petalW + "px";
+        petal.style.height = petalH + "px";
+        petal.style.left = petalLeft + "px";
+        petal.style.top = petalTop + "px";
+        petal.style.borderRadius = borderR;
 
-        const petalGradient = `linear-gradient(180deg, rgba(255,255,255,0.28), ${color})`;
-        petal.style.background = petalGradient;
-        petal.style.filter = type === "rose" ? "saturate(1.15)" : "none";
-
-        const scale =
-          type === "dandelion"
-            ? 0.72 + Math.random() * 0.26
-            : type === "rose"
-              ? 0.82 + Math.random() * 0.18
-              : 0.88 + Math.random() * 0.22;
-
-        const petalDistance =
-          type === "dandelion" ? -10 : type === "rose" ? -12 : -15;
-
-        const rotation =
-          type === "dandelion"
-            ? i * 30
-            : type === "rose"
-              ? i * 40
-              : i * 25.7;
-
-        const bend = type === "rose" ? 4 : type === "peony" ? 6 : 2;
-
-        petal.style.transform = `rotate(${rotation}deg) translateY(${petalDistance}px) scale(${scale}) rotate(${bend}deg)`;
-
-        if (type === "rose") {
-          petal.style.opacity = (0.78 + Math.random() * 0.22).toFixed(2);
+        let pColor;
+        if (type === "sunflower") {
+          pColor = i % 2 === 0 ? "#f5c518" : "#e8b200";
+        } else if (type === "dandelion") {
+          pColor = "#fff9c4";
+        } else {
+          pColor = color;
         }
+        petal.style.background = `linear-gradient(180deg, rgba(255,255,255,0.35), ${pColor})`;
+        petal.style.boxShadow = `inset 0 0 8px rgba(255,255,255,0.2)`;
 
-        if (type === "peony") {
-          petal.style.width = "18px";
-          petal.style.height = "26px";
-        }
+        const rotation = (360 / petalTotal) * i;
+        const scale = 0.8 + Math.random() * 0.3;
+        petal.style.transform = `rotate(${rotation}deg) translateY(${dist}px) scale(${scale}) rotate(${bend}deg)`;
 
         head.appendChild(petal);
       }
     }
 
-
-    /*
-      Создание цветка
-    */
-
     function createFlower(x, y) {
+      if (y < 130) y = 130;
 
-      // Не позволяем сажать цветы слишком высоко
-      const minY = 130;
+      const type = flowerTypes[Math.floor(Math.random() * flowerTypes.length)];
 
-      if (y < minY) {
-        y = minY;
-      }
+      /* Стебли стали длиннее: 120–240px вместо 60–130 */
+      const stemHeight = 120 + Math.random() * 120;
+      const size = 0.22 + Math.random() * 0.18;
+      const color = flowerColors[Math.floor(Math.random() * flowerColors.length)];
 
-      // Немного случайности
-      const type =
-        flowerTypes[
-          Math.floor(
-            Math.random() *
-            flowerTypes.length
-          )
-        ];
-
-      const stemHeight =
-        60 + Math.random() * 70;
-
-      const size =
-        0.22 + Math.random() * 0.18;
-
-      const color =
-        flowerColors[
-          Math.floor(
-            Math.random() *
-            flowerColors.length
-          )
-        ];
-
-
-      /*
-        Основной контейнер
-      */
-
-      const flower =
-        document.createElement("div");
-
+      const flower = document.createElement("div");
       flower.className = "flower";
       flower.dataset.type = type;
-
       flower.style.left = x + "px";
       flower.style.top = y + "px";
+      flower.style.setProperty("--stem-height", stemHeight + "px");
+      flower.style.transform = `scale(${size})`;
 
-      flower.style.setProperty(
-        "--stem-height",
-        stemHeight + "px"
-      );
-
-      flower.style.transform =
-        `scale(${size})`;
-
-
-      /*
-        Стебель
-      */
-
-      const stem =
-        document.createElement("div");
-
+      const stem = document.createElement("div");
       stem.className = "stem";
 
+      const leafLeft = document.createElement("div");
+      leafLeft.className = "leaf left";
+      const leafRight = document.createElement("div");
+      leafRight.className = "leaf right";
 
-      /*
-        Листья
-      */
-
-      const leafLeft =
-        document.createElement("div");
-
-      leafLeft.className =
-        "leaf left";
-
-
-      const leafRight =
-        document.createElement("div");
-
-      leafRight.className =
-        "leaf right";
-
-
-      /*
-        Голова цветка
-      */
-
-      const head =
-        document.createElement("div");
-
-      head.className =
-        "flower-head";
+      const head = document.createElement("div");
+      head.className = "flower-head";
       head.style.transform = "scale(0.8)";
-
-
-      /*
-        Лепестки
-      */
 
       buildFlowerPetals(type, head, color);
 
-
-      /*
-        Центр цветка
-      */
-
-      const center =
-        document.createElement("div");
-
-      center.className =
-        "center";
-
-      head.appendChild(center);
-
-
-      /*
-        Собираем цветок
-      */
+      if (type === "heart") {
+        const heartShape = document.createElement("div");
+        heartShape.className = "heart-shape";
+        heartShape.style.background = color;
+        heartShape.style.filter = "drop-shadow(0 0 12px " + color + ")";
+        head.appendChild(heartShape);
+      } else {
+        const center = document.createElement("div");
+        center.className = "center";
+        head.appendChild(center);
+      }
 
       flower.appendChild(stem);
       flower.appendChild(leafLeft);
       flower.appendChild(leafRight);
       flower.appendChild(head);
-
       garden.appendChild(flower);
 
       for (let i = 0; i < 5; i++) {
         const sparkle = document.createElement("div");
         sparkle.className = "sparkle";
-        sparkle.style.left = (x + 20 + Math.random() * 20) + "px";
-        sparkle.style.top = (y - 12 + Math.random() * 20) + "px";
-        sparkle.style.setProperty("--sx", (Math.random() * 30 - 15) + "px");
-        sparkle.style.setProperty("--sy", (Math.random() * -35 - 10) + "px");
+        sparkle.style.left = (x + 20 + Math.random()*20) + "px";
+        sparkle.style.top = (y - 12 + Math.random()*20) + "px";
+        sparkle.style.setProperty("--sx", (Math.random()*30-15) + "px");
+        sparkle.style.setProperty("--sy", (Math.random()*-35-10) + "px");
         garden.appendChild(sparkle);
-
         setTimeout(() => sparkle.remove(), 1200);
       }
 
-
-      /*
-        Анимация частиц
-      */
-
       createParticles(x, y);
-
-
       flowerCount++;
-
-      updateCount();
     }
-
-
-    /*
-      Создание частиц
-    */
 
     function createParticles(x, y) {
-
       for (let i = 0; i < 10; i++) {
-
-        const particle =
-          document.createElement("div");
-
-        particle.className =
-          "particle";
-
-        particle.style.left =
-          x + "px";
-
-        particle.style.top =
-          y + "px";
-
-        particle.style.setProperty(
-          "--x",
-          (Math.random() * 80 - 40) + "px"
-        );
-
-        particle.style.setProperty(
-          "--y",
-          (Math.random() * -80 - 10) + "px"
-        );
-
-        garden.appendChild(particle);
-
-
-        setTimeout(() => {
-          particle.remove();
-        }, 800);
+        const p = document.createElement("div");
+        p.className = "particle";
+        p.style.left = x + "px";
+        p.style.top = y + "px";
+        p.style.setProperty("--x", (Math.random()*80-40) + "px");
+        p.style.setProperty("--y", (Math.random()*-80-10) + "px");
+        garden.appendChild(p);
+        setTimeout(() => p.remove(), 800);
       }
     }
 
+    garden.addEventListener("click", (e) => {
+      if (e.target.closest("button")) return;
+      playMelody();
+      createFlower(e.clientX, e.clientY);
+    });
 
-    /*
-      Клик мышкой
-    */
-
-    garden.addEventListener(
-      "click",
-      function(event) {
-
-        playMelody();
-
-        // Не создаем цветок при клике
-        // по кнопке управления
-        if (
-          event.target.closest("button")
-        ) {
-          return;
-        }
-
-        createFlower(
-          event.clientX,
-          event.clientY
-        );
-      }
-    );
-
-
-    /*
-      Поддержка touch
-      для мобильных устройств
-    */
-
-    garden.addEventListener(
-      "touchstart",
-      function(event) {
-
-        playMelody();
-        event.preventDefault();
-
-        const touch =
-          event.touches[0];
-
-        createFlower(
-          touch.clientX,
-          touch.clientY
-        );
-
-      },
-      {
-        passive: false
-      }
-    );
-
-
-    /*
-      Очистить сад
-    */
-
-    if (clearButton) {
-      clearButton.addEventListener(
-        "click",
-        function(event) {
-
-          event.stopPropagation();
-
-          const flowers =
-            garden.querySelectorAll(
-              ".flower"
-            );
-
-          flowers.forEach(
-            flower => flower.remove()
-          );
-
-          flowerCount = 0;
-
-          updateCount();
-        }
-      );
-    }
-
-
-    /*
-      Случайный цветок
-    */
-
-    if (randomButton) {
-      randomButton.addEventListener(
-        "click",
-        function(event) {
-
-          event.stopPropagation();
-
-          const width =
-            window.innerWidth;
-
-          const height =
-            window.innerHeight;
-
-          const x =
-            50 +
-            Math.random() *
-            (width - 100);
-
-          const y =
-            180 +
-            Math.random() *
-            (height - 300);
-
-          createFlower(x, y);
-        }
-      );
-    }
-
-
-    /*
-      Автоматически создаем несколько
-      цветов при первом запуске
-    */
+    garden.addEventListener("touchstart", (e) => {
+      playMelody(); e.preventDefault();
+      createFlower(e.touches[0].clientX, e.touches[0].clientY);
+    }, { passive: false });
 
     setTimeout(() => {
       createAmbientSparkles();
-
-      const width =
-        window.innerWidth;
-
-      const height =
-        window.innerHeight;
-
-      createFlower(
-        width * 0.35,
-        height * 0.7
-      );
-
-      setTimeout(() => {
-
-        createFlower(
-          width * 0.52,
-          height * 0.75
-        );
-
-      }, 220);
-
-      setTimeout(() => {
-
-        createFlower(
-          width * 0.68,
-          height * 0.69
-        );
-
-      }, 440);
-
+      const w = window.innerWidth, h = window.innerHeight;
+      createFlower(w * 0.35, h * 0.7);
+      setTimeout(() => createFlower(w * 0.52, h * 0.75), 220);
+      setTimeout(() => createFlower(w * 0.68, h * 0.69), 440);
     }, 700);
-
   </script>
-
 </body>
 </html>
-
