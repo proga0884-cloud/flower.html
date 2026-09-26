@@ -5,6 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Happy Birthday Sonya!</title>
   <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Montserrat:ital,wght@0,300;0,500;1,300&display=swap" rel="stylesheet">
+  <script src="https://www.youtube.com/iframe_api"></script>
+  <script src="https://www.youtube.com/iframe_api"></script>
   <style>
     * {
       box-sizing: border-box;
@@ -291,19 +293,38 @@
       0% { opacity: 0; transform: translateY(20px) scale(0.9); }
       100% { opacity: 1; transform: translateY(0) scale(1); }
     }
+
+    #yt-player {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 280px;
+      height: 158px;
+      z-index: 9999;
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.5);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.5s;
+    }
+
+    #yt-player.active {
+      opacity: 0.85;
+      pointer-events: auto;
+    }
   </style>
 </head>
 <body>
-
-  <!-- YouTube IFrame API -->
-  <script src="https://www.youtube.com/iframe_api"></script>
-  <div id="yt-player" style="position:fixed;top:-9999px;left:-9999px;width:1px;height:1px;"></div>
 
   <!-- Кнопка музыки -->
   <button class="music-btn" id="music-toggle" onclick="toggleMusic(event)">
     <span id="music-icon">🎵</span>
     <span id="music-text">Play "Love Story"</span>
   </button>
+
+  <div id="yt-player"></div>
 
   <div class="glow-bg"></div>
 
@@ -411,26 +432,41 @@ M100,267.257c1.858,0,3.364,1.506,3.364,3.363c0,0,0,33.17,0,44.227c0,19.143,0,57.
   <script>
     const icon = document.getElementById('music-icon');
     const text = document.getElementById('music-text');
+    const playerDiv = document.getElementById('yt-player');
     let player = null;
     let isPlaying = false;
 
     function onYouTubeIframeAPIReady() {
       player = new YT.Player('yt-player', {
+        height: '158',
+        width: '280',
         videoId: 'e-ORhEE9VVg',
-        playerVars: { autoplay: 0, loop: 1, playlist: 'e-ORhEE9VVg', controls: 0 },
+        playerVars: {
+          autoplay: 0,
+          loop: 1,
+          playlist: 'e-ORhEE9VVg',
+          controls: 1,
+          modestbranding: 1,
+          rel: 0
+        },
+        events: {
+          onReady: function() { console.log('YT player ready'); }
+        }
       });
     }
 
     function toggleMusic(e) {
       e.stopPropagation();
-      if (!player) return;
+      if (!player || !player.playVideo) return;
       if (isPlaying) {
         player.pauseVideo();
+        playerDiv.classList.remove('active');
         icon.textContent = '🔇';
         text.textContent = 'Muted';
         isPlaying = false;
       } else {
         player.playVideo();
+        playerDiv.classList.add('active');
         icon.textContent = '🎵';
         text.textContent = 'Playing "Love Story"';
         isPlaying = true;
@@ -438,8 +474,9 @@ M100,267.257c1.858,0,3.364,1.506,3.364,3.363c0,0,0,33.17,0,44.227c0,19.143,0,57.
     }
 
     document.body.addEventListener('click', function autoPlay() {
-      if (!isPlaying && player) {
+      if (!isPlaying && player && player.playVideo) {
         player.playVideo();
+        playerDiv.classList.add('active');
         icon.textContent = '🎵';
         text.textContent = 'Playing "Love Story"';
         isPlaying = true;
