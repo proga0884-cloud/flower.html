@@ -295,10 +295,9 @@
 </head>
 <body>
 
-  <!-- Аудио-трек Love Story -->
-  <audio id="bg-music" loop preload="auto">
-    <source src="https://archive.org/download/taylor-swift-love-story-lyrics-romeo-save-me/Taylor%20Swift%20-%20Love%20Story.mp3" type="audio/mpeg">
-  </audio>
+  <!-- YouTube IFrame API -->
+  <script src="https://www.youtube.com/iframe_api"></script>
+  <div id="yt-player" style="position:fixed;top:-9999px;left:-9999px;width:1px;height:1px;"></div>
 
   <!-- Кнопка музыки -->
   <button class="music-btn" id="music-toggle" onclick="toggleMusic(event)">
@@ -410,37 +409,40 @@ M100,267.257c1.858,0,3.364,1.506,3.364,3.363c0,0,0,33.17,0,44.227c0,19.143,0,57.
   </div>
 
   <script>
-    const audio = document.getElementById('bg-music');
-    const toggleBtn = document.getElementById('music-toggle');
     const icon = document.getElementById('music-icon');
     const text = document.getElementById('music-text');
+    let player = null;
     let isPlaying = false;
 
-    // Включение/пауза по кнопке
+    function onYouTubeIframeAPIReady() {
+      player = new YT.Player('yt-player', {
+        videoId: 'e-ORhEE9VVg',
+        playerVars: { autoplay: 0, loop: 1, playlist: 'e-ORhEE9VVg', controls: 0 },
+      });
+    }
+
     function toggleMusic(e) {
       e.stopPropagation();
+      if (!player) return;
       if (isPlaying) {
-        audio.pause();
+        player.pauseVideo();
         icon.textContent = '🔇';
         text.textContent = 'Muted';
         isPlaying = false;
       } else {
-        audio.play().then(() => {
-          icon.textContent = '🎵';
-          text.textContent = 'Playing "Love Story"';
-          isPlaying = true;
-        }).catch(err => console.log('Audio playback error:', err));
+        player.playVideo();
+        icon.textContent = '🎵';
+        text.textContent = 'Playing "Love Story"';
+        isPlaying = true;
       }
     }
 
-    // Автовоспроизведение по первому касанию страницы
     document.body.addEventListener('click', function autoPlay() {
-      if (!isPlaying) {
-        audio.play().then(() => {
-          icon.textContent = '🎵';
-          text.textContent = 'Playing "Love Story"';
-          isPlaying = true;
-        }).catch(err => console.log('Autoplay error:', err));
+      if (!isPlaying && player) {
+        player.playVideo();
+        icon.textContent = '🎵';
+        text.textContent = 'Playing "Love Story"';
+        isPlaying = true;
       }
     }, { once: true });
   </script>
